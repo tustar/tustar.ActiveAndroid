@@ -1,0 +1,45 @@
+<resources>
+    <!--应用名称-->
+    <string name="app_name">ActiveAndroid</string>
+
+    <!--常用-->
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+
+    <!--标题-->
+    <string name="title_activity_add_category">添加|编辑类别</string>
+    <string name="title_activity_detail_category">列表详情</string>
+    <string name="title_activity_add_item">添加|编辑子项</string>
+
+    <!--空数据-->
+    <string name="empty_text">没有数据, 请添加数据</string>
+
+    <!--添加类别-->
+    <string name="add_category_name">类别名称：</string>
+    <string name="add_category_tips">类别名称不能为空</string>
+    <string name="add_category_hint">请输入类别名称</string>
+    <string name="add_category_success">添加类别成功</string>
+    <string name="add_category_update_success">修改类别名称成功</string>
+
+    <!--类别详情-->
+    <string name="detail_category_name">类别名称</string>
+    <string name="detail_category_random">随便一个类别</string>
+    <string name="detail_category_items_head">子项列表</string>
+    <string name="detail_category_add_item">添加子项</string>
+    <string name="detail_category_delete_success">删除类别成功</string>
+
+    <!--添加子项-->
+    <string name="add_item_success">添加子项成功</string>
+    <string name="add_item_name">子项名称</string>
+    <string name="add_item_hint">请输入子项名称</string>
+    <string name="add_item_tips">请输入子项名称</string>
+
+    <!--子项详情-->
+    <string name="detail_item_delete_success">删除子项成功</string>
+
+    <!--其他-->
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

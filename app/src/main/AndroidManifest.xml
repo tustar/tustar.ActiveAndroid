@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tustar.active" >
+
+    <application
+        android:name=".activity.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Pickrand.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="tustar.com.active.model.Item, tustar.com.active.model.Category" />
+
+        <activity
+            android:name=".activity.AddCategoryActivity"
+            android:label="@string/title_activity_add_category" />
+        <activity
+            android:name=".activity.DetailCategoryActivity"
+            android:label="@string/title_activity_detail_category" />
+        <activity
+            android:name=".activity.AddItemActivity"
+            android:label="@string/title_activity_add_item" >
+        </activity>
+    </application>
+
+</manifest>

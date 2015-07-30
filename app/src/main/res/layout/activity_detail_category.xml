@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context="com.tustar.active.activity.DetailCategoryActivity">
+
+    <TextView
+        android:id="@+id/detail_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/detail_category_name"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/detail_category_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_category_name"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/detail_category_random"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/detail_category_random" />
+
+        <Button
+            android:id="@+id/detail_category_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit" />
+
+        <Button
+            android:id="@+id/detail_category_add_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/detail_category_add_item" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/detail_category_items_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_category_btns"
+        android:layout_marginTop="10dp"
+        android:text="@string/detail_category_items_head"
+        android:textColor="@android:color/black" />
+
+
+    <ListView
+        android:id="@+id/detail_category_item_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/detail_category_items_head"
+        android:layout_marginTop="8dp"
+        android:background="#2ebfef" />
+
+    <include
+        layout="@layout/item_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/detail_category_item_listview"
+        android:layout_alignLeft="@+id/detail_category_item_listview"
+        android:layout_alignRight="@+id/detail_category_item_listview"
+        android:layout_below="@+id/detail_category_items_head"
+        android:layout_marginTop="8dp" />
+
+
+</RelativeLayout>
