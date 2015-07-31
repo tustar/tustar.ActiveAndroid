@@ -1,7 +1,6 @@
 package com.tustar.active.dao;
 
 import com.activeandroid.query.Select;
-import com.tustar.active.model.Category;
 import com.tustar.active.model.Item;
 
 import java.util.List;
@@ -15,18 +14,13 @@ public class ItemDao {
 
     }
 
-    public static List<Item> getAll(Category category) {
-        try {
-            return new Select()
-                    .from(Item.class)
-                    .where("category_id = ?", category.getId())
-                    .orderBy("name asc")
-                    .execute();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+    public static List<Item> getAll(Long categoryId) {
 
-        return null;
+        return new Select()
+                .from(Item.class)
+                .where("category = ?", categoryId)
+                .orderBy("name asc")
+                .execute();
     }
 
 }

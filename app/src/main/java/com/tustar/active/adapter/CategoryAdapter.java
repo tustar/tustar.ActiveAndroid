@@ -54,7 +54,8 @@ public class CategoryAdapter extends BaseAdapter {
         }
 
         // 设置值
-        item.text.setText(categories.get(position).name);
+        Category category = categories.get(position);
+        item.text.setText(category.getId() + ":" + category.name);
 
         return convertView;
     }

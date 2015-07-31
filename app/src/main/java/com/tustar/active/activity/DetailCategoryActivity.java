@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.activeandroid.query.Select;
 import com.tustar.active.R;
 import com.tustar.active.adapter.ItemAdapter;
-import com.tustar.active.common.ExtraKey;
 import com.tustar.active.common.RequestCode;
 import com.tustar.active.dao.ItemDao;
 import com.tustar.active.model.Category;
@@ -26,6 +25,10 @@ import com.tustar.active.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.tustar.active.common.ExtraKey.KEY_CATEGORY;
+import static com.tustar.active.common.ExtraKey.KEY_CATEGORY_ID;
+import static com.tustar.active.common.ExtraKey.KEY_ITEM_ID;
 
 public class DetailCategoryActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
@@ -38,6 +41,7 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
     private Button mCategoryEditBtn;
     private Button mCategoryAddItemBtn;
     private Category category;
+    private Long categoryId;
 
     // Item
     private ListView mListView;
@@ -51,9 +55,8 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         context = this;
 
         // Category
-        category = (Category) getIntent().getSerializableExtra(ExtraKey.KEY_CATEGORY);
-        final Category finalCategory = category;
-        Logger.d(TAG, "onCreate :: category = " + category);
+        category = (Category) getIntent().getSerializableExtra(KEY_CATEGORY);
+        categoryId = getIntent().getLongExtra(KEY_CATEGORY_ID, -1);
         mCategoryName = (TextView) findViewById(R.id.detail_category_name);
         mCategoryName.setText(category.name);
 
@@ -69,7 +72,8 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         mCategoryEditBtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setClass(context, AddCategoryActivity.class);
-            intent.putExtra(ExtraKey.KEY_CATEGORY, finalCategory);
+            intent.putExtra(KEY_CATEGORY_ID, categoryId);
+            intent.putExtra(KEY_CATEGORY, category);
             startActivityForResult(intent, RequestCode.AddCategoryActivity);
         });
 
@@ -78,7 +82,7 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         mCategoryAddItemBtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setClass(context, AddItemActivity.class);
-            intent.putExtra(ExtraKey.KEY_CATEGORY, finalCategory);
+            intent.putExtra(KEY_CATEGORY_ID, categoryId);
             startActivityForResult(intent, RequestCode.AddItemActivity);
         });
 
@@ -87,7 +91,7 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         mEmptyLayout = (LinearLayout) findViewById(R.id.empty_layout);
         mListView.setEmptyView(mEmptyLayout);
         if (category != null) {
-            items = ItemDao.getAll(category);
+            items = ItemDao.getAll(categoryId);
         }
         if (items == null) {
             items = new ArrayList<>();
@@ -96,6 +100,13 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        items = ItemDao.getAll(categoryId);
+        adapter.setItems(items);
     }
 
     @Override
@@ -129,13 +140,13 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
                 case RequestCode.AddCategoryActivity:
                     Toast.makeText(context, R.string.add_category_update_success,
                             Toast.LENGTH_SHORT).show();
-                    category = (Category) data.getSerializableExtra(ExtraKey.KEY_CATEGORY);
+                    category = (Category) data.getSerializableExtra(KEY_CATEGORY);
                     mCategoryName.setText(category.name);
                     break;
                 case RequestCode.AddItemActivity:
                     Toast.makeText(context, R.string.add_item_success,
                             Toast.LENGTH_SHORT).show();
-                    items = ItemDao.getAll(category);
+                    items = ItemDao.getAll(categoryId);
                     adapter.setItems(items);
                     break;
             }
@@ -158,7 +169,8 @@ public class DetailCategoryActivity extends AppCompatActivity implements Adapter
         Item item = (Item) adapter.getItem(position);
         Intent intent = new Intent();
         intent.setClass(context, AddItemActivity.class);
-        intent.putExtra(ExtraKey.KEY_ITEM, item);
+        intent.putExtra(KEY_CATEGORY_ID, category.getId());
+        intent.putExtra(KEY_ITEM_ID, item.getId());
         startActivityForResult(intent, RequestCode.AddItemActivity);
     }
 }

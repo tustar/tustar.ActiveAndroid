@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Category category = (Category) adapter.getItem(position);
         Intent intent = new Intent();
+        intent.putExtra(ExtraKey.KEY_CATEGORY_ID, category.getId());
         intent.putExtra(ExtraKey.KEY_CATEGORY, category);
         intent.setClass(context, DetailCategoryActivity.class);
         startActivity(intent);

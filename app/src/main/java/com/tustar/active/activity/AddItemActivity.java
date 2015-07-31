@@ -3,10 +3,12 @@ package com.tustar.active.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.tustar.active.R;
 import com.tustar.active.common.ExtraKey;
@@ -15,7 +17,7 @@ import com.tustar.active.model.Item;
 
 public class AddItemActivity extends AppCompatActivity {
 
-    private static  final String TAG = AddItemActivity.class.getSimpleName();
+    private static final String TAG = AddItemActivity.class.getSimpleName();
     private Context context;
     private EditText mItemNameEt;
     private Button mSaveBtn;
@@ -27,8 +29,14 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        category = (Category) getIntent().getSerializableExtra(ExtraKey.KEY_CATEGORY);
-        item = (Item) getIntent().getSerializableExtra(ExtraKey.KEY_ITEM);
+        Long categoryId = getIntent().getLongExtra(ExtraKey.KEY_CATEGORY_ID, -1);
+        if (categoryId > -1) {
+            category = Category.load(Category.class, categoryId);
+        }
+        Long itemId = getIntent().getLongExtra(ExtraKey.KEY_ITEM_ID, -1);
+        if (itemId > -1) {
+            item = Item.load(Item.class, itemId);
+        }
 
         mItemNameEt = (EditText) findViewById(R.id.add_item_input);
         mSaveBtn = (Button) findViewById(R.id.add_item_btn);
@@ -36,34 +44,22 @@ public class AddItemActivity extends AppCompatActivity {
             mItemNameEt.setText(item.name);
         }
         mSaveBtn.setOnClickListener(v -> {
-//            String name = mItemNameEt.getText().toString().trim();
-//            if (TextUtils.isEmpty(name)) {
-//                Toast.makeText(context, R.string.add_item_tips, Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//
-//            Item item = new Item();
-//            if (category != null) {
-//                item.category = category;
-//            }
-//            item.name = name;
-//            item.save();
-//            setResult(RESULT_OK);
-//            finish();
+            String name = mItemNameEt.getText().toString().trim();
+            if (TextUtils.isEmpty(name)) {
+                Toast.makeText(context, R.string.add_item_tips, Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            Category restaurants = new Category();
-            restaurants.name = "Restaurants";
-            restaurants.save();
-
-            Item item = new Item();
-            item.category = restaurants;
-            item.name = "Red Robin";
+            if (item == null) {
+                item = new Item();
+            }
+            if (category != null) {
+                item.category = category;
+            }
+            item.name = name;
             item.save();
-
-            item = new Item();
-            item.category = restaurants;
-            item.name = "Olive Garden";
-            item.save();
+            setResult(RESULT_OK);
+            finish();
         });
     }
 

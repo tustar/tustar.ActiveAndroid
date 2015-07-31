@@ -24,13 +24,15 @@ public class AddCategoryActivity extends ActionBarActivity {
     private EditText mCategoryNameEt;
     private Button mCategoryAddBtn;
     private Category category;
+    private Long categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
 
-        category = (Category) getIntent().getSerializableExtra(ExtraKey.KEY_CATEGORY);
+        categoryId = getIntent().getLongExtra(ExtraKey.KEY_CATEGORY_ID, -1);
+        category = Category.load(Category.class, categoryId);
 
         mCategoryNameEt = (EditText) findViewById(R.id.add_category_input);
         if (category != null) {
@@ -44,14 +46,13 @@ public class AddCategoryActivity extends ActionBarActivity {
                 return;
             }
 
-            Category newCategory = category;
-            if (newCategory == null) {
-                newCategory = new Category();
+            if (category == null) {
+                category = new Category();
             }
-            newCategory.name = name;
-            if (newCategory.save().longValue() > 0) {
+            category.name = name;
+            if (category.save().longValue() != -1) {
                 Intent data = new Intent();
-                data.putExtra(ExtraKey.KEY_CATEGORY, newCategory);
+                data.putExtra(ExtraKey.KEY_CATEGORY, category);
                 setResult(RESULT_OK, data);
                 finish();
             }
